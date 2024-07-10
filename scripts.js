@@ -14,25 +14,60 @@ const photos = [
     }
 ];
 
+let currentPhotoIndex = 0;
 const photoElement = document.getElementById('photo');
 const titleElement = document.getElementById('photo-title');
 const descriptionElement = document.getElementById('photo-description');
 const photographerElement = document.getElementById('photo-photographer');
+const prevPhotoBtn = document.getElementById('prev-photo-btn');
+const nextPhotoBtn = document.getElementById('next-photo-btn');
 const randomPhotoBtn = document.getElementById('random-photo-btn');
+
+function displayPhoto(index) {
+    const photo = photos[index];
+    photoElement.src = photo.imageUrl;
+    photoElement.alt = photo.title;
+    titleElement.textContent = photo.title;
+    descriptionElement.textContent = photo.description;
+    photographerElement.textContent = `Photographer: ${photo.photographer}`;
+}
+
+function showNextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+    displayPhoto(currentPhotoIndex);
+}
+
+function showPrevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+    displayPhoto(currentPhotoIndex);
+}
 
 // Function to display a random photo and its details
 function displayRandomPhoto() {
     const randomIndex = Math.floor(Math.random() * photos.length);
-    const randomPhoto = photos[randomIndex];
-
-    photoElement.src = randomPhoto.imageUrl;
-    titleElement.textContent = randomPhoto.title;
-    descriptionElement.textContent = randomPhoto.description;
-    photographerElement.textContent = `Photographer: ${randomPhoto.photographer}`;
+    displayPhoto(randomIndex);
 }
 
-// Display a random photo on page load
-displayRandomPhoto();
+// Display initial photo
+displayPhoto(currentPhotoIndex);
 
-// Event listener for the Random Photo button
+// Event listeners for navigation buttons
+nextPhotoBtn.addEventListener('click', showNextPhoto);
+prevPhotoBtn.addEventListener('click', showPrevPhoto);
+
+// Event listener for Random Photo button
 randomPhotoBtn.addEventListener('click', displayRandomPhoto);
+
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+        showNextPhoto();
+    } else if (event.key === 'ArrowLeft') {
+        showPrevPhoto();
+    }
+});
+
+// Event listener to open larger view of the photo on click
+photoElement.addEventListener('click', function() {
+    window.open(photoElement.src, '_blank');
+});
