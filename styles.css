@@ -19,6 +19,12 @@ h1 {
 .photo-container {
     margin-top: 20px;
     position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.photo-container:hover {
+    transform: scale(1.02);
 }
 
 img#photo {
@@ -42,6 +48,25 @@ img#photo {
     margin-bottom: 10px;
     color: #555;
     font-size: 1em;
+}
+
+.photo-nav {
+    margin-top: 10px;
+}
+
+.photo-nav button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.photo-nav button:hover {
+    background-color: #0056b3;
 }
 
 button#random-photo-btn {
